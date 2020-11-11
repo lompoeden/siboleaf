@@ -1,0 +1,11 @@
+<h1>Editing Task</h1>
+
+<% if logged_in? %>
+<% else %>
+    <% controller.redirect_to new_session_path %>
+<% end %>
+
+<%= render 'form', task: @task %>
+
+<%= link_to 'Show', @task %> |
+<%= link_to 'Back', tasks_path %>
