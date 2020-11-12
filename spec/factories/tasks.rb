@@ -5,4 +5,4 @@ FactoryBot.define do
     content { 'content test' }
   end
 end
-  
+end
