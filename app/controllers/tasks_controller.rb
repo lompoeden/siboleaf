@@ -6,22 +6,17 @@ class TasksController < ApplicationController
   end
 
   def new
-    if params[:back]
-      @task = Tasks.new(task_params)
-    else
       @task = Task.new
-    end
   end
 
   def show
-    @task = Task.new(task_params)
   end
 
   def edit
   end
 
   def create
-    @task = Tasks.new(task_params)
+    @task = Task.new(task_params)
     if params[:back]
       render :new
     else
@@ -58,6 +53,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :startdate, :priority, :status, :id)
+    params.require(:task).permit(:title, :content)
   end
 end

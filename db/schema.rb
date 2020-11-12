@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_11_10_140745) do
   enable_extension "plpgsql"
 
   create_table "tasks", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title"
     t.text "content"
     t.datetime "startdate"
     t.integer "priority", default: 0
