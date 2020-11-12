@@ -1,23 +1,16 @@
-<p id="notice"><%= notice %></p>
-
-<% if logged_in? %>
-<% else %>
-    <% controller.redirect_to new_session_path %>
-<% end %>
-
 <p>
   <strong>Title:</strong>
   <%= @task.title %>
 </p>
 
 <p>
-  <strong>Start date:</strong>
-  <%= @task.start_date %>
+  <strong>Content:</strong>
+  <%= @task.content %>
 </p>
 
 <p>
-  <strong>End date:</strong>
-  <%= @task.end_date %>
+  <strong>Startdate:</strong>
+  <%= @task.startdate %>
 </p>
 
 <p>
@@ -27,22 +20,7 @@
 
 <p>
   <strong>Priority:</strong>
-  <%if @task.priority.present?%>
-    <%if @task.priority == 1%>
-      <span>high</span>
-    <%elsif @task.priority == 2%>
-      <span>medium</span>
-    <%elsif @task.priority == 3%>
-      <span>low</span>
-    <%end%>
-  <%end%>
-</p>
-
-<p>
-  <strong>Labels:</strong>
-  <%@task.labels.each do |label|%>
-    <span><%=label.label_type%></span>
-  <%end%>
+  <%= @task.priority %>
 </p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |

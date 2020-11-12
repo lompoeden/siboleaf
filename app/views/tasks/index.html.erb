@@ -1,91 +1,25 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Tasks</h1>
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New T<p id="notice"><%= notice %></p>
-
-<div class="nav nav-pills nav-justified">
-  <h1 class="nav-brand ml-2">Tasks</h1>
-  <div class="nav-item">
-    <% if logged_in? %>
-      <%= link_to @current_user.username, user_path(@current_user.id), class:"btn btn-outlined-dark" %>
-      <%= link_to "Logout", session_path(@current_user.id), method: :delete, class:"btn btn-dark" %>
-    <% else %>
-      <% controller.redirect_to new_session_path %>
-    <% end %>
-  </div>
-</div>
-
-<div class="nav nav-pills nav-justified">
-  <%= link_to "sort by expiration date", tasks_path(sort_expired: "true"),class:"nav-item"%>
-  <%= link_to "sort by priority", tasks_path(sort_priority: "true"),class:"nav-item"%>
-    <%= search_form_for @search do |f| %>
-      <%= f.label :status_search %>
-      <%= f.search_field :status_cont %>
-      <%= f.label :title_search %>
-      <%= f.search_field :title_cont %>
-      <%= f.label :label_search %>
-      <%= f.search_field :labels_label_type_cont %>
-      <%= f.submit 'search'%>
-    <% end %>
-</div>
-
-<table class="table mt-3">
-  <thead>
-    <tr>
-      <th>NO</th>
-      <th>Title</th>
-      <th>Start date</th>
-      <th>End date</th>
+      <th>title</th>
+      <th>Content</th>
+      <th>startdate</th>
       <th>Status</th>
       <th>Priority</th>
-      <th>Labels</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
-
-  <% t=0 %>
 
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= t += 1 %></td>
         <td><%= task.title %></td>
-        <td><%= task.start_date %></td>
-        <td><%= task.end_date %></td>
+        <td><%= task.content %></td>
+        <td><%= task.startdate %></td>
         <td><%= task.status %></td>
-        <%if task.priority.present?%>
-          <%if task.priority == 1%>
-            <td>high</td>
-          <%elsif task.priority == 2%>
-            <td>medium</td>
-          <%elsif task.priority == 3%>
-            <td>low</td>
-          <%end%>
-        <%end%>
-        <%task.labels.each do |label|%>
-          <td><%=label.label_type%></td>
-        <%end%>
+        <td><%= task.priority %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -96,6 +30,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path,class:"mb-2" %>
-
-<%= paginate @tasks, class:"mt-5" %>ask', new_task_path %>
+<%= link_to 'New Task', new_task_path %>

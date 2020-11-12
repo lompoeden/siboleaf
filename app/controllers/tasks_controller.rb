@@ -7,7 +7,7 @@ class TasksController < ApplicationController
 
   def new
     if params[:back]
-      @task = Task.new(task_params)
+      @task = Tasks.new(task_params)
     else
       @task = Task.new
     end
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = Tasks.new(task_params)
     if params[:back]
       render :new
     else
@@ -58,6 +58,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :startdate, :priority, :status, :id)
   end
 end
