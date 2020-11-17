@@ -16,7 +16,7 @@ RSpec.describe "Tasks management function", type: :system do
   describe 'list function' do
     context 'to transition to the list screen' do
       it 'already created tasks should be displayed' do
-        task = FactoryBot.create(:task, title: 'task')
+task = Task.create(title: 'task', content: 'content')
         visit tasks_path
         expect(page).to have_content 'task'
       end
@@ -26,7 +26,7 @@ RSpec.describe "Tasks management function", type: :system do
   describe 'detailed display function' do
     context 'to transition to any task detail screen' do
       it 'contents of relevant task should be displayed' do
-        task = FactoryBot.create(:task, title: 'test2', content: 'test2')
+        task = Task.create(title: 'test2', content: 'content')
         visit task_path(task)
         expect(page).to have_content 'test2'
       end
