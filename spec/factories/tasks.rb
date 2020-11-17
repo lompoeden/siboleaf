@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task do
-    title { 'title test' }
-    content { 'content test' }
+    title { 'Task Name' }
+    content { 'cTask Details' }
     deadline { '2020-09-03 17:00:00' }
     status { 'status' }
     priority { '0' }
