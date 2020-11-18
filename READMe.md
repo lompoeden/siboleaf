@@ -1,39 +1,36 @@
-# Task model
-
-# colum name     data type
-
-# title            string
-
-# content          text
-
-# startdate         datetime
-
-# status            string
-
-# priority           integer
-
-# user_id            integer
-
-# user mdel
-
-# column name        datatype
-
-# Name                string
-
-# email               strip
-
-# password_digest       strip
-
-# Label model
-
-# column name          Datatype
-
-# name                 string
-
-# Bag label model
-
-# column name           Datatype
-
-# task_id              integer
-
-# label_id             integer
+## Task model
+| Column name | Data type |
+|:------------|:-----------|
+| title       | string     |
+|:------------|:-----------|
+| content       | text     |
+|:------------|:-----------|
+| startdate       | datetime|
+|:------------|:-----------|
+| status      | string     |
+|:------------|:-----------|
+| priority       | integer |
+|:------------|:-----------|
+| user_id       | integer  |
+|:------------|:-----------|
+## User model
+| Column name | Data type |
+|:----------------|:-----------|
+| name            | string |
+|:------------|:-----------|
+| email       | string     |
+|:------------|:-----------|
+| password_digest | string|
+|:------------|:-----------|
+## Label model
+| Column name | Data type |
+|:------------|:-----------|
+| name       | string     |
+|:------------|:-----------|
+##  Bag label model
+| Column name | Data type |
+|:------------|:-----------|
+| task_id     | integer    |
+|:------------|:-----------|
+| label_id     | integer |
+***
