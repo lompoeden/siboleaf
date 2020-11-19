@@ -1,4 +1,4 @@
-class AddTasks < ActiveRecord::Migration[6.0]
+class AddTasks < ActiveRecord::Migration[5.2]
   def change
     add_column :tasks, :startdate, :datetime
     add_column :tasks, :priority, :integer
