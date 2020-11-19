@@ -8,6 +8,7 @@
       <th>startdate</th>
       <th>Status</th>
       <th>Priority</th>
+      <th>Enddate</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -20,6 +21,8 @@
         <td><%= task.startdate %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
+        
+
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
