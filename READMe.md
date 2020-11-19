@@ -24,3 +24,14 @@
 | task_id     | integer   |
 | label_id    | integer   |
 ***
+
+1. Login
+. To create an app on heroku you need to login first by using the command below heroku login
+
+Then the following instructions
+
+2. To create an app on heroku use the command below heroku create
+
+3. To push the codes on heroku use the command below and make sure the branch is master git push heroku master
+
+4. To perform migrations on heroku use the command below heroku run rails detached db:migrate
