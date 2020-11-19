@@ -17,11 +17,10 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.title %></td>
-        <td><%= task.content %></td>
         <td><%= task.startdate %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
-        
+
 
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
