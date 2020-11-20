@@ -17,12 +17,12 @@ ActiveRecord::Schema.define(version: 2020_11_20_023630) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "title", null: false
-    t.text "content"
+    t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "startdate"
-    t.integer "priority", default: 0
-    t.string "status", default: "pending"
+    t.integer "priority", default: 0, null: false
+    t.string "status", default: "pending", null: false
   end
 
 end

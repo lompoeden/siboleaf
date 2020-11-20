@@ -8,7 +8,7 @@
       <th>startdate</th>
       <th>Status</th>
       <th>Priority</th>
-      <th>Enddate</th>
+      <th>Createddate</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -21,16 +21,8 @@
         <td><%= task.startdate %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
+        <td><%= task.created_at.strftime("%Hh%M min %Y, %B, %d") %></td>
 
-        <% end %>
-
-          <div>
-
-          <% @tasks.each do |task| %>
-
-          <div class=" p-4 border rounded my-2 bg-light">
-            <%= task.created_at.strftime("%Hh%M min %Y, %B, %d") %>
-          
 
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
