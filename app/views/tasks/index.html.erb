@@ -20,6 +20,15 @@
         <td><%= task.startdate %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
+        <%if task.priority.present?%>
+          <%if task.priority == 1%>
+            <td>high</td>
+          <%elsif task.priority == 2%>
+            <td>medium</td>
+          <%elsif task.priority == 3%>
+            <td>low</td>
+          <%end%>
+        <%end%>
 
 
         <td><%= link_to 'Show', task %></td>
