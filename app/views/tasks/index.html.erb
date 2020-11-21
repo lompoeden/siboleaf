@@ -1,5 +1,20 @@
 <h1>Tasks</h1>
 
+
+<div class="nav nav-pills nav-justified">
+  <%= link_to "sort by expiration date", tasks_path(sort_expired: "true"),class:"nav-item"%>
+  <%= link_to "sort by priority", tasks_path(sort_priority: "true"),class:"nav-item"%>
+    <%= search_form_for @search do |f| %>
+      <%= f.label :status_search %>
+      <%= f.search_field :status_cont %>
+      <%= f.label :title_search %>
+      <%= f.search_field :title_cont %>
+      <%= f.label :label_search %>
+      <%= f.search_field :labels_label_type_cont %>
+      <%= f.submit 'search'%>
+    <% end %>
+</div>
+
 <table>
   <thead>
     <tr>
