@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_023630) do
     t.datetime "startdate"
     t.integer "priority", default: 0, null: false
     t.string "status", default: "pending", null: false
+     t.string "search"
   end
 
 end
