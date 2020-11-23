@@ -7,19 +7,29 @@
 </div>
 
 
-<div class="nav nav-pills nav-justified">
-  <%= link_to "sort by expiration date", tasks_path(sort_expired: "true"),class:"nav-item"%>
-  <%= link_to "sort by priority", tasks_path(sort_priority: "true"),class:"nav-item"%>
-    <%= search_form_for @search do |f| %>
-      <%= f.label :status_search %>
-      <%= f.search_field :status_cont %>
-      <%= f.label :title_search %>
-      <%= f.search_field :title_cont %>
-      <%= f.label :label_search %>
-      <%= f.search_field :labels_label_type_cont %>
-      <%= f.submit 'search'%>
-    <% end %>
-</div>
+<div class=" col-6  form-inline my-2 my-lg-0"<%= search_form_for @search do |f| %>
+          <div class="row float-right">
+            <div class="mx-4">
+              <%= f.label :title_cont, "Search by title"  %>
+              <%= f.text_field :title_cont, class:"field form-control mr-sm-2"%>
+            </div>
+            <br>
+
+
+            <div class="mx-4">
+              <%= f.label :title_cont, "Search by Status"  %>
+              <%= f.text_field :title_cont, class:"field form-control mr-sm-2"%>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+          </div>
+          <div class="mx-4">
+            <%= f.submit 'search'%>          </div>
+        </div>
+        <% end %>
 
 <table>
   <thead>

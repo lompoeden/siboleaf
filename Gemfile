@@ -33,3 +33,18 @@ group :test do
   gem 'webdrivers'
 end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'will_paginate', '~> 3.1', '>= 3.1.6'
+gem 'database_cleaner'
+gem 'ransack'
+gem 'carrierwave', '~> 2.1'
+gem 'mini_racer'
+gem 'cloudinary'
+gem 'coffee-rails', '~> 4.2'
+gem 'figaro'
+gem 'jquery-rails'
+gem 'meta-tags'
+gem 'toastr-rails'
+gem 'uglifier', '>= 1.3.0'
+gem 'bootstrap', '~> 4.0'
+gem 'kaminari'

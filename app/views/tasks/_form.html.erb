@@ -41,15 +41,21 @@
     <%= form.select :priority, [['high', '1'],['medium', '2'], ['low', '3']] %>
   </div>
 
-  <div class="field_labels">
-      <% @labels.each do |label| %>
-      <%= form.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), disabled: label[:disabled], include_hidden: false}, label[:id]%>
-      <label><%= label.label_type %></label>
-      <% end %>
-    </div>
-
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class=" row field ml-2">
+    <%= form.label :Task_start, "Task starts: ", class:"mr-2"  %>
+    <br>
+    <%= form.date_select :start_at %>
+  </div>
+  <br>
+  <div class="row field ml-2">
+    <%= form.label :Task_end, "Task ends: ", class:"mr-2"  %>
+    <%= form.date_select :end_at %>
+  </div>
+  <div class="actions text-center mt-4">
+    <%= form.submit "Save", class:"btn btn-info " %>
   </div>
 <% end %>
+</div>
+</div>
+</div>
+</div>

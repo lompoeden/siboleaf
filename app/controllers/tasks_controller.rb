@@ -2,7 +2,19 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @search = Task.ransack(params[:q])
+    if params[:q]
+      @tasks = @search.result.page params[:page]
+    elsif params[:search_label]
+    @tasks = Task.joins(:labels)
+        .where("labels.name ILIKE ?", "%#{params[:search_label]}%").page params[:page]
+    elsif params[:sort_deadline]
+      @tasks = Task.all.order('end_at DESC').page params[:page]
+    elsif params[:sort_priority]
+      @tasks = Task.all.order('priority DESC').page params[:page]
+    else
+      @tasks = Task.all.order('created_at DESC').page params[:page]
+    end
   end
 
   def new
@@ -53,6 +65,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :status, :priority, :start_at, :end_at)
   end
 end

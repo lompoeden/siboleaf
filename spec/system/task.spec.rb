@@ -8,7 +8,7 @@ RSpec.describe "Tasks management function", type: :system do
         fill_in "Task Name", with: 'title test'
         fill_in "Task Details", with: 'content test'
         click_on 'Create Task'
-        expect(page).to have_content 'content test'
+        expect(page).to have_content 'title test'
       end
     end
   end
@@ -16,8 +16,8 @@ RSpec.describe "Tasks management function", type: :system do
   describe 'list function' do
     context 'to transition to the list screen' do
       it 'already created tasks should be displayed' do
-task = Task.create(title: 'task', content: 'content')
-        visit tasks_path
+        task = FactoryBot.create(:task, title: 'task')
+        visit task_path(task)
         expect(page).to have_content 'task'
       end
     end
@@ -26,9 +26,29 @@ task = Task.create(title: 'task', content: 'content')
   describe 'detailed display function' do
     context 'to transition to any task detail screen' do
       it 'contents of relevant task should be displayed' do
-        task = Task.create(title: 'test2', content: 'content')
+        task = FactoryBot.create(:task, title: 'test2', content: 'test2')
         visit task_path(task)
         expect(page).to have_content 'test2'
+      end
+    end
+  end
+
+  let!(:task){ FactoryBot.create(:task, title: 'task') }
+  before do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+    visit tasks_path
+  end
+  describe 'list display function' do
+    context 'When transitioning to the list screen' do
+      it 'already created tasks list should be displayed' do
+        expect(page).to have_content 'title test'
+      end
+    end
+    context 'When tasks are arranged in descending order of creation date and time' do
+      it 'New task is displayed at the top' do
+        assert Task.all.order(startdate: :desc)
       end
     end
   end

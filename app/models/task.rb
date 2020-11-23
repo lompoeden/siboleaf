@@ -3,5 +3,6 @@ class Task < ApplicationRecord
     validates :content, presence: true
     validates :status, presence: true
     validates :priority, presence: true
-    #validates :startdate, presence: true
-end
+    has_many :task_labels, dependent: :destroy
+    has_many :labels, through: :task_labels
+    end
