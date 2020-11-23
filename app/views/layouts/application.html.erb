@@ -9,51 +9,24 @@
     <%= javascript_include_tag "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"  %>
   </head>
 
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-
-   <!-- Navbar brand -->
-   <a class="navbar-brand" href="#"><b>S</b>iboleaf</a>
-
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-   aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-   <span class="navbar-toggler-icon"></span>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <a class="navbar-brand" href="#">Siboleaf</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
    </button>
 
-   <div class="collapse navbar-collapse" id="basicExampleNav">
-
-   <!-- Links -->
-   <ul class="navbar-nav mr-auto">
-
-   <li class="nav-item active">
-   <a class="nav-link" href="#">Home
-   <span class="sr-only">(current)</span>
-   </a>
-   </li>
-
-   <!-- Dropdown -->
-
-   </ul>
-   <!-- Login and sign up -->
-   <div class="md-form my-0">
-   <ul class="navbar-nav mr-auto">
-   <li class="nav-item active">
-   <a class="nav-link" href="#">
-   <span class="sr-only">(current)</span>
-   </a>
-   </li>
-   <li class="nav-item active">
-   <a class="nav-link" href="#">
-   <span class="sr-only">(current)</span>
-   </a>
-   </li>
-   </ul>
-
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav mr-auto">
+       <li class="nav-item active">
+         <a class="nav-link" href="#">
+             <img src="https://img.icons8.com/material-sharp/24/000000/home.png"/>
+         </a>
+       </li>
+       <li class="nav-item">
+         <%= link_to "new", new_task_path, class: "nav-link" %>
+       </li>
    </div>
-   </div>
-   <!-- Collapsible content -->
-
-   </nav>
-
+ </nav>
   <body>
     <%= yield %>
     <br>

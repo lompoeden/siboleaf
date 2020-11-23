@@ -56,9 +56,9 @@
 
 
         <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <td><%= link_to image_tag("https://img.icons8.com/metro/26/000000/edit.png"), edit_task_path(task) %></td>
+        <td><%= link_to image_tag("https://img.icons8.com/material-rounded/26/000000/trash.png"), task, method: :delete, data: {confirm: "are you sure?"}%></td>
+
     <% end %>
   </tbody>
 </table>
