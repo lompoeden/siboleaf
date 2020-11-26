@@ -5,16 +5,16 @@ RSpec.describe "Tasks management function", type: :system do
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "in progress", from: "task[status]"
    select "high", from: "task[priority]"
    click_on 'search'
 
    visit new_task_path
    fill_in "task[title]", with: "title3"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "low", from: "task[priority]"
    click_on 'search'
@@ -34,8 +34,8 @@ RSpec.describe "Tasks management function", type: :system do
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "high", from: "task[priority]"
    click_on 'search'
@@ -47,8 +47,8 @@ RSpec.describe "Tasks management function", type: :system do
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "high", from: "task[priority]"
    click_on 'search'
@@ -62,16 +62,16 @@ RSpec.describe "Tasks management function", type: :system do
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "high", from: "task[priority]"
    click_on 'search'
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "low", from: "task[priority]"
    click_on 'search'
@@ -86,8 +86,8 @@ RSpec.describe "Tasks management function", type: :system do
  scenario "Test search by status" do
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "low", from: "task[priority]"
    click_on 'search'
@@ -102,8 +102,8 @@ RSpec.describe "Tasks management function", type: :system do
  scenario "Test search by title" do
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "low", from: "task[priority]"
    click_on 'search'
@@ -118,16 +118,16 @@ RSpec.describe "Tasks management function", type: :system do
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "high", from: "task[priority]"
    click_on 'search'
 
    visit new_task_path
    fill_in "task[title]", with: "test2"
-   fill_in "task[start_date]", with: Date.new(1/1/2020)
-   fill_in "task[end_date]", with: Date.new(1/2/2020)
+   fill_in "task[Startdate]", with: Date.new(1/1/2020)
+   fill_in "task[Enddate]", with: Date.new(1/2/2020)
    select "Not yet started", from: "task[status]"
    select "low", from: "task[priority]"
    click_on 'search'
