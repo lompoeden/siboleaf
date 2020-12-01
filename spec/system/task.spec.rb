@@ -1,143 +1,120 @@
 require 'rails_helper'
 RSpec.describe "Tasks management function", type: :system do
+  before do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+    visit tasks_path
+  end
 
-  scenario "Test task list" do
+  describe 'new feautures' do
+    context 'case was the task to create a new task' do
+      it 'should display the new task created' do
+        visit new_task_path
+        fill_in "Task Name", with: 'title test'
+        fill_in "Task Details", with: 'content test'
+        fill_in "Deadline", with: '002020-11-24 11:00 PM'
+        select 'started'
+        select 'low'
+        click_on 'Create Task'
+        expect(page).to have_content 'title test'
+      end
+    end
+  end
 
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "in progress", from: "task[status]"
-   select "high", from: "task[priority]"
-   click_on 'search'
+  describe 'list function' do
+    context 'to transition to the list screen' do
+      it 'already created tasks should be displayed' do
+        expect(page).to have_content 'test1'
+        expect(page).to have_content 'test2'
+        expect(page).to have_content 'sample3'
+      end
+    end
+  end
 
-   visit new_task_path
-   fill_in "task[title]", with: "title3"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "low", from: "task[priority]"
-   click_on 'search'
+  describe 'detailed display function' do
+    context 'to transition to any task detail screen' do
+      it 'contents of relevant task should be displayed' do
+        visit new_task_path
+        fill_in "Task Name", with: 'title test4'
+        fill_in "Task Details", with: 'content test'
+        fill_in "Deadline", with: '002020-11-24 11:00 PM'
+        select 'started'
+        select 'low'
+        click_on 'Create Task'
+        expect(page).to have_content 'title test4'
+      end
+    end
+  end
 
-   visit tasks_path
+  describe 'created at test' do
+    context 'When you click the  Sort by creation button in the task list' do
+      it 'list tasks sorted in descending order of creation date' do
+        visit tasks_path
+        click_on "Sort by creation"
+        assert Task.all.order('created_at desc')
+      end
+    end
+  end
 
+  describe 'created at test' do
+    context 'When you click the Sort by  button in the task list' do
+      it 'list tasks sorted in descending order of deadline' do
+        visit tasks_path
+        click_on "Sort by enddate"
+        assert Task.all.order('enddate desc')
+      end
+    end
+  end
 
-   expect(page).to have_content('title3')
-   expect(page).to have_content('low')
-   expect(page).to have_content('high')
-   expect(page).to have_content('in progress')
-   expect(page).to have_content('Not yet started')
+  describe 'search function' do
+    context 'If you do a fuzzy search for the title with the scope method' do
+      it "Narrows down tasks that include search keywords with title" do
+        visit tasks_path
+        fill_in "title keyword", with: "sample"
+        click_on "search"
+        expect(page).to have_content 'sample'
+      end
+    end
 
- end
+    context 'When a status search is performed with the scope method' do
+      it "Narrows down tasks that exactly match with status" do
+        visit tasks_path
+        select "pending"
+        click_on "search"
+        expect(page).to have_content 'pending'
+      end
+    end
 
- scenario "Test task creation" do
+    context 'If  you  do a fuzzy search and status search for the title with the scope method' do
+      it "Narrow down tasks that include search keywords in the title and exactly match the status" do
+        visit tasks_path
+        fill_in "title keyword", with: "sample3"
+        select "pending"
+        click_on "search"
+        expect(page).to have_content 'pending'
+        expect(page).to have_content 'sample3'
+      end
+    end
+  end
 
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "high", from: "task[priority]"
-   click_on 'search'
-   expect(page).to have_content 'Task was successfully created'
-
- end
-
- scenario "Test of task details" do
-
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "high", from: "task[priority]"
-   click_on 'search'
-   visit tasks_path
-   click_on 'Show'
-   expect(page).to have_content "Not yet started"
-
- end
-
- scenario "Test whether tasks are arranged in descending order of creation date" do
-
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "high", from: "task[priority]"
-   click_on 'search'
-
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "low", from: "task[priority]"
-   click_on 'search'
-
-   visit tasks_path
-   tasks = page.all('tr')
-   expect(tasks[1]).to have_content('high')
-   expect(tasks[2]).to have_content('low')
- end
-
-
- scenario "Test search by status" do
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "low", from: "task[priority]"
-   click_on 'search'
-
-   visit tasks_path
-   fill_in "q[status_cont]", with: "Not yet started"
-   click_on 'search'
-   expect(page).to have_content "Not yet started"
- end
-
-
- scenario "Test search by title" do
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "low", from: "task[priority]"
-   click_on 'search'
-
-   visit tasks_path
-   fill_in "q[title_cont]", with: "test2"
-   click_on 'search'
-   expect(page).to have_content "test2"
- end
-
- scenario "Test sort by priority" do
-
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "high", from: "task[priority]"
-   click_on 'search'
-
-   visit new_task_path
-   fill_in "task[title]", with: "test2"
-   fill_in "task[Startdate]", with: Date.new(1/1/2020)
-   fill_in "task[Enddate]", with: Date.new(1/2/2020)
-   select "Not yet started", from: "task[status]"
-   select "low", from: "task[priority]"
-   click_on 'search'
-
-   visit tasks_path
-   click_on 'sort by priority'
-   tasks = page.all('tr')
-   expect(tasks[1]).to have_content('low')
-   expect(tasks[2]).to have_content('high')
-
- end
-
+  let!(:task){ FactoryBot.create(:task, title: 'task') }
+  before do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+    visit tasks_path
+  end
+  describe 'list display function' do
+    context 'When transitioning to the list screen' do
+      it 'already created tasks list should be displayed' do
+        expect(page).to have_content 'title test'
+      end
+    end
+    context 'When tasks are arranged in descending order of creation date and time' do
+      it 'New task is displayed at the top' do
+        assert Task.all.order(enddate: :desc)
+      end
+    end
+  end
 end
