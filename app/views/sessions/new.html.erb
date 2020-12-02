@@ -1,0 +1,31 @@
+<div>
+  <nav class="navbar navbar-dark bg-dark pt-4 pb-4">
+    <div class="container">
+      <div class="h2 text-light">Everleaf</div>
+      <%= form_with(scope: :session, url: sessions_path, local: true) do |form| %>
+        <div class="ml-auto row d-flex align-items-center">
+          <div class="mr-2">
+            <div>
+              <span class="text-light">emal<span>
+            </div>
+            <div>
+              <%= form.text_field :email %>
+            </div>
+          </div>
+          <div class="mr-2">
+            <div>
+              <span class="text-light">Password<span>
+            </div>
+            <div>
+              <%= form.password_field :password %>
+            </div>
+          </div>
+          <div>
+            <%= form.submit 'login', class: "btn btn-outline-primary mt-4" %>
+            <%= link_to "signup", new_user_path,class: "btn btn-outline-primary mt-4 text-light"%>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </nav>
+</div>
