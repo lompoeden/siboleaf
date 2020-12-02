@@ -4,5 +4,5 @@ class Task < ApplicationRecord
   #validates :enddate, presence: true
   validates :status, presence: true
   validates :priority, presence: true
-  paginates_per 6
+  paginates_per 4
 end

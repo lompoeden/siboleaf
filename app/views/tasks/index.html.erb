@@ -10,9 +10,9 @@
 <div class="nav nav-pills nav-justified">
     <%= search_form_for @search do |f| %>
       <%= f.label :status_search %>
-      <%= f.search_field :status_cont %>
+      <%= f.search_field :status_cont, placeholder:"Status search" %>
       <%= f.label :title_search %>
-      <%= f.search_field :title_cont %>
+      <%= f.search_field :title_cont, placeholder:"Title search" %>
       <%= f.label :label_search %>
       <%= f.submit 'search'%>
     <% end %>
@@ -54,6 +54,6 @@
 
 <hr>
 
-<%= paginate @tasks, class:"mt-5" %>
+<%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
  <div>
 <div>
