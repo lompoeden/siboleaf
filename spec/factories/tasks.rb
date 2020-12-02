@@ -1,17 +1,17 @@
 FactoryBot.define do
   factory :task do
-    title { 'test1' }
-    content { 'content test 1' }
-    duedate { '2020-11-30 11:00:00' }
+    title { 'task13' }
+    content { 'content jetaime' }
+    enddate { '2020-12-02 11:00:00' }
   end
   factory :second_task, class: Task do
-    title { 'test2' }
-    content { 'content test 2' }
-    enddate{ '2020-12-30 00:00:00' }
+    title { 'task12' }
+    content { 'content jysuis' }
+    enddate{ '2020-12-02 00:00:00' }
   end
   factory :third_task, class: Task do
-    title { 'sample3' }
-    content { 'sample 3' }
-    enddate{ '2020-12-18 17:00:00' }
+    title { 'test2' }
+    content { 'task' }
+    enddate{ '2020-11-26 17:00:00' }
   end
 end
