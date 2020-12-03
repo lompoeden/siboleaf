@@ -3,7 +3,12 @@
 <div class="nav nav-pills nav-justified">
   <h1 class="nav-brand ml-2">Tasks</h1>
   <div class="nav-item">
-
+    <% if logged_in? %>
+         <%= link_to @current_user.username, user_path(@current_user.id), class:"btn btn-outlined-blue" %>
+         <%= link_to "Logout", session_path(@current_user.id), method: :delete, class:"btn btn-blue" %>
+       <% else %>
+         <% controller.redirect_to new_session_path %>
+       <% end %>
   </div>
 </div>
 

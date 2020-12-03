@@ -27,6 +27,7 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 end
 group :test do
   gem 'selenium-webdriver'

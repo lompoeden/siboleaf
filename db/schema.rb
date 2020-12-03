@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_141332) do
+ActiveRecord::Schema.define(version: 2020_12_03_050636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "associations", force: :cascade do |t|
+    t.bigint "label_id"
+    t.bigint "task_id"
+    t.index ["label_id"], name: "index_associations_on_label_id"
+    t.index ["task_id"], name: "index_associations_on_task_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "task_labels", force: :cascade do |t|
     t.integer "task_id"
@@ -32,7 +49,9 @@ ActiveRecord::Schema.define(version: 2020_12_02_141332) do
     t.string "status", default: "pending", null: false
     t.datetime "enddate"
     t.string "search"
+    t.bigint "user_id"
     t.index ["search"], name: "index_tasks_on_search"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,6 +59,11 @@ ActiveRecord::Schema.define(version: 2020_12_02_141332) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: false
+    t.string "email"
   end
 
+  add_foreign_key "associations", "labels"
+  add_foreign_key "associations", "tasks"
+  add_foreign_key "tasks", "users"
 end
