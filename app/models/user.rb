@@ -1,17 +1,8 @@
 class User < ApplicationRecord
-  validates :email, presence:true, uniqueness:true,length:{maximum: 255}
-    validates :username, presence:true, uniqueness:true,length:{maximum: 30}
-    before_validation {username.downcase!}
-    has_secure_password
-    before_destroy :check_if_its_last_admin
-
-    has_many :tasks, dependent: :destroy
-
-    private
-
-    def check_if_its_last_admin
-        if self.admin? && User.where(admin: :true).count == 1
-            throw :abort
-        end
-    end
+  has_many :tasks, dependent: :destroy
+  validates :username , presence:true
+  validates :email , presence:true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  before_validation { email.downcase! }
+  has_secure_password
+  validates :password, length: { minimum: 6 }
 end

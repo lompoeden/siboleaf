@@ -1,15 +1,7 @@
 <p id="notice"><%= notice %></p>
-<%= link_to "Labels", labels_path, class:"btn btn-success ml-2" %>
+
 <div class="nav nav-pills nav-justified">
 
-  <div class="nav-item">
-    <% if logged_in? %>
-      <%= link_to @current_user.username, user_path(@current_user.id), class:"btn btn-outlined-dark" %>
-      <%= link_to "Logout", session_path(@current_user.id), method: :delete, class:"btn btn-dark" %>
-    <% else %>
-      <% controller.redirect_to new_session_path %>
-    <% end %>
-  </div>
 
 </div>
 

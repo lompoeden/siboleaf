@@ -12,13 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.label :username %>
+    <%= form.text_field :username %>
   </div>
 
   <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username %>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
   </div>
 
   <%if user.id.present? && current_user.id != user.id%>
