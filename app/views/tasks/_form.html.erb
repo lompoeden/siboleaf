@@ -1,0 +1,61 @@
+<%= form_with(model: task, local: true) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= link_to 'general', tasks_path %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_field :content %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_field :end_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, [['Not yet started', 'Not yet started'],['in progress', 'in progress'], ['completed', 'completed']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.select :priority, [['high', '1'],['medium', '2'], ['low', '3']] %>
+  </div>
+
+  <div class=" row field ml-2">
+    <%= form.label :Task_start, "Task starts: ", class:"mr-2"  %>
+    <br>
+    <%= form.date_select :start_at %>
+  </div>
+  <br>
+  <div class="row field ml-2">
+    <%= form.label :Task_end, "Task ends: ", class:"mr-2"  %>
+    <%= form.date_select :end_at %>
+  </div>
+  <div class="actions text-center mt-4">
+    <%= form.submit "Save", class:"btn btn-info " %>
+  </div>
+<% end %>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<%if @user.id != current_user.id%>
+  <%controller.redirect_to tasks_path%>
+<%end%>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+
+<%= link_to 'Back', tasks_path %>
