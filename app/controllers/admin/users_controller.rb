@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+before_action :admin_necessary
 
   def index
     @users = User.all.order('id ASC')
@@ -14,12 +15,14 @@ class Admin::UsersController < ApplicationController
     if @user.save
       redirect_to admin_users_path, notice: 'The User was created successfully'
     else
+      flash.now[:danger] = "User registration failed"
       render.new
     end
   end
 
   def show
     @tasks = Task.all
+    @tasks = @tasks.page(params[:page]).per(PER)
   end
 
   def edit
@@ -54,4 +57,10 @@ class Admin::UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :password,
                                  :password_confirmation, :admin)
   end
-end
+  def admin_necessary
+      if not current_user.admin
+        flash[:notice] = "reserved to admins！"
+        redirect_to root_path
+      end
+    end
+  end
