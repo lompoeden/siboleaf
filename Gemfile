@@ -1,6 +1,5 @@
-source 'https://rubygems.org'
+'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
- "https://github.com/#{repo_name}.git"
 
 ruby '2.6.5'
 
@@ -50,4 +49,4 @@ gem 'toastr-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap', '~> 4.0'
 gem 'kaminari'
-gem 'bootstrap4-kaminari-views'
+#gem 'bootstrap4-kaminari-views'
