@@ -18,7 +18,7 @@ class TasksController < ApplicationController
     elsif params[:sort_priority]
       @tasks = Task.all.order('priority DESC').page params[:page]
     else
-      @tasks = Task.all.order('created_at DESC').page params[:page]
+      @tasks = Task.where(user_id: @current_user.id).order('created_at DESC ').page(params[:page])
     end
   end
 
