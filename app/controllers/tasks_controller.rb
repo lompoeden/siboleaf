@@ -1,7 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  #before_action :authorize, only: [:new, :edit, :update, :destroy, :user]
-  #before_action :authorize
+  before_action :current_user
+    before_action :authenticate_user
+    before_action :logged_in?
+    PER = 4
 
   def index
     Task.page(4)
@@ -21,8 +23,13 @@ class TasksController < ApplicationController
   end
 
   def new
+    if params[:back]
+      @task = Task.new(task_params)
+      @task.enddate = Date.today
+    else
       @task = Task.new
   end
+end
 
   def show
   end
@@ -58,7 +65,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     flash[:success] = 'Task created'
-    redirect_to tasks_path
+    redirect_to tasks_url, notice: "task destroyed"
   end
 
   private

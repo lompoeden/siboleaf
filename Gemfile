@@ -16,12 +16,12 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
   gem 'rspec-rails'
- gem 'factory_bot_rails'
  gem 'faker'
  gem 'launchy'
  gem 'capybara'

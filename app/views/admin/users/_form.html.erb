@@ -34,10 +34,16 @@
     <%= form.password_field :password %>
   </div>
 
+
   <div class="field">
     <%= form.label :password_confirmation %>
     <%= form.password_field :password_confirmation%>
   </div>
+
+  <div class="field">
+  <%= form.label :admin %>
+  <%= form.label.check_box :admin, {}, {}, 'true', 'false' %>
+</div>
 
   <div class="actions">
     <%= form.submit %>

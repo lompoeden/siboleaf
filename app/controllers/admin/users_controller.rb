@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-before_action :admin_necessary
+  before_action :only_admin_can_access_management_page, only: [:index]
+  PER = 4
 
   def index
     @users = User.all.order('id ASC')
@@ -22,7 +23,7 @@ before_action :admin_necessary
 
   def show
     @tasks = Task.all
-    @tasks = @tasks.page(params[:page]).per(PER)
+  #  @tasks = @tasks.page(params[:page]).per(PER)
   end
 
   def edit
@@ -33,6 +34,7 @@ before_action :admin_necessary
     if @user.update(user_params)
       redirect_to admin_users_path, notice: 'The User details was updated successfully'
     else
+      flash.now[:danger] = "update failed"
       render :edit
     end
   end
@@ -53,14 +55,15 @@ before_action :admin_necessary
   def set_user
     @user = User.find(params[:id])
   end
-  def user_params
-    params.require(:user).permit(:username, :email, :password,
-                                 :password_confirmation, :admin)
-  end
-  def admin_necessary
-      if not current_user.admin
-        flash[:notice] = "reserved to admins！"
-        redirect_to root_path
+
+  def only_admin_can_access_management_page
+      unless current_user.username == "admin"
+        redirect_to root_path, notice: "only  admin can access management page"
       end
+    end
+
+    def user_params
+      params.require(:user).permit(:username, :email, :password,
+                                   :password_confirmation, :admin)
     end
   end
