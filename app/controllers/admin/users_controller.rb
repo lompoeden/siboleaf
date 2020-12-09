@@ -23,16 +23,17 @@ class Admin::UsersController < ApplicationController
 
   def show
     @tasks = Task.all
-  #  @tasks = @tasks.page(params[:page]).per(PER)
+   @tasks = @tasks.page(params[:page]).per(PER)
   end
 
   def edit
   end
 
   def update
-    @user = User.find(params[:id])
+    puts @user
     if @user.update(user_params)
-      redirect_to admin_users_path, notice: 'The User details was updated successfully'
+      flash[:success] = "update successful"
+      redirect_to admin_user_path(@user)
     else
       flash.now[:danger] = "update failed"
       render :edit
@@ -57,7 +58,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def only_admin_can_access_management_page
-      unless current_user.username == "admin"
+      unless current_user.admin == true
         redirect_to root_path, notice: "only  admin can access management page"
       end
     end

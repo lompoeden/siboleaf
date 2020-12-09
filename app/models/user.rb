@@ -4,8 +4,7 @@ class User < ApplicationRecord
   validates :email , presence:true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: true
   before_validation { email.downcase! }
   has_secure_password
-  validates :password, length: { minimum: 6 }
-  users = User.order(:names).limit(10)
+  validates :password, length: { minimum: 6 }, on: :create
   before_destroy :before_admin_destroy
   before_update :before_admin_update
 
