@@ -39,6 +39,7 @@ end
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if params[:back]
       render :new
     else
@@ -75,6 +76,6 @@ end
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :status, :priority, :startdate, :enddate)
+    params.require(:task).permit(:title, :content, :status, :priority, :startdate, :enddate, :id, :user_id)
   end
 end
