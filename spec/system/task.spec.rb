@@ -7,7 +7,7 @@ RSpec.feature "Task management function", type: :feature do
     fill_in  'Password' ,  with: 'lompo123'
     click_on  'Log in'
     click_on 'New Task'
-      fill_in  'Name' ,  with: 'task1'
+      fill_in  'username' ,  with: 'task1'
       fill_in  'Content' ,  with: 'content1'
       click_on 'Submit'
   end
@@ -24,7 +24,7 @@ RSpec.feature "Task management function", type: :feature do
 
 
 
-    fill_in  'Name' ,  with: 'completed'
+    fill_in  'userName' ,  with: 'completed'
     fill_in  'Content' ,  with: 'lets do it'
 
     click_on  'Submit'
@@ -62,7 +62,7 @@ RSpec.feature "Task management function", type: :feature do
   scenario 'Test Task validation' do
     visit tasks_path
     click_on 'New Task'
-      fill_in  'Name' ,  with: 'task1'
+      fill_in  'username' ,  with: 'task1'
       click_on 'Submit'
       expect(page).to have_content(`Name can't be blank`)
 

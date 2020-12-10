@@ -44,17 +44,17 @@ RSpec.feature "user management function", type: :feature do
   end
 
   scenario "Test user details" do
-    @user= User.create!(names: 'lompo', email: 'kana@gmail.com', user_type: 'admin', password: 'lompo123')
+    @user= User.create!(names: 'lompo', email: 'lompo@gmail.com', user_type: 'admin', password: 'lompo123')
 
 
     visit admin_user_path(id: @user.id)
-    expect(page).to have_content('kana@gmail.com')
+    expect(page).to have_content('lompo@gmail.com')
     expect(page).to have_content('admin')
   end
   scenario "Test user updating" do
     @user = User.first
     visit edit_admin_user_path(id: @user.id)
-    fill_in 'Name', with: 'name update'
+    fill_in 'username', with: 'username update'
     fill_in 'Email', with: 'lompo@gmail.com'
     click_on 'Update User'
     visit admin_users_path
