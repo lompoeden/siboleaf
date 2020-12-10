@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user, { only: [:index, :show, :edit, :update] }
-  PER = 4
+  PER = 6
 
   def new
     @user = User.new
@@ -15,14 +15,15 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       flash[:success] = 'User was successfully created'
       redirect_to user_path(@user.id)
-     else
+    else
       render :new
     end
   end
 
   def show
-    @user = User.find(params[:id])
-    @tasks = Task.all
+    @user = current_user
+    @tasks = @user.tasks&.page(params[:page]).per(PER)
+    redirect_to tasks_path if @user.id !=  params[:id].to_i
   end
 
   def update
@@ -41,23 +42,7 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
-      @user = User.find(params[:id])
-    end
-    def only_create_user_when_none_signed_in
-      if current_user
-        redirect_to users_path,  notice: "you can't create user when signed in"
-      end
-    end
-    def only_see_own_page
-      @user = User.find(params[:id])
-      if current_user != @user
-        redirect_to users_path, notice: "Sorry, but you are only allowed to view your own profile page."
-      end
-    end
-
   def user_params
-    params.require(:user).permit(:username, :email, :password,
-                                 :password_confirmation)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end

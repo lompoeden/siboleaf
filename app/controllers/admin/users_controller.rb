@@ -1,10 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :only_admin_can_access_management_page, only: [:index]
-  PER = 4
+  before_action :admin_necessary
+  PER = 6
 
   def index
-    @users = User.all.order('id ASC')
+    @users = User.select(:id, :username, :email, :admin).order(created_at: :asc)
   end
 
   def new
@@ -14,16 +14,16 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_users_path, notice: 'The User was created successfully'
+      flash[:success] = "new user added"
+      redirect_to admin_users_path(@user.id)
     else
       flash.now[:danger] = "User registration failed"
-      render.new
+      render :new
     end
   end
 
   def show
-    @tasks = Task.all
-   @tasks = @tasks.page(params[:page]).per(PER)
+    @tasks = Task.where(user_id: @user.id).page(params[:page]).per(PER)
   end
 
   def edit
@@ -41,30 +41,29 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-     if @user.id == current_user.id
-       redirect_to admin_users_url, notice: "You cannot delete Signed In user"
-       @admins = User.admin
-     elsif @admins == 1
-       redirect_to admin_users_url, notice: "At least one admin must remain!"
-     else
-       @user.destroy
-       redirect_to admin_users_url, notice: 'User was successfully deleted.'
-     end
-   end
-   private
+    if @user.destroy
+      flash[:success] = "user deleted!"
+      redirect_to admin_users_path
+    else
+      flash[:danger] = "user not deleted"
+      redirect_to admin_users_path
+    end
+  end
+
+  private
 
   def set_user
     @user = User.find(params[:id])
   end
 
-  def only_admin_can_access_management_page
-      unless current_user.admin == true
-        redirect_to root_path, notice: "only  admin can access management page"
-      end
-    end
-
-    def user_params
-      params.require(:user).permit(:username, :email, :password,
-                                   :password_confirmation, :admin)
+  def admin_necessary
+    unless current_user.admin?
+      flash[:danger] = "only for admins！"
+      redirect_to tasks_path
     end
   end
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :admin)
+  end
+end
