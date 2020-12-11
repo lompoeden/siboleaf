@@ -1,73 +1,118 @@
-# In this require, the feature required for Feature Spec such as Capybara are available.
 require 'rails_helper'
+RSpec.describe 'User registration/login/logout function', type: :system do
 
-# On the right side of this RSpec.feature, write the test item name like "task management feature" (grouped by do ~ end)
+  describe 'User registration test' do
+    context 'If the user is not logged in' do
+      it 'should register new user' do
+        visit new_user_path
+        fill_in 'Username', with: 'test'
+        fill_in 'Email', with: 'test@example.com'
+        fill_in 'Password', with: 'password'
+        fill_in 'Password confirmation', with: 'password'
+        click_button 'Create my account'
+        expect(page).to have_content 'test'
+      end
 
-
-RSpec.feature "user management function", type: :feature do
-  # In scenario (alias of it), write the processing of the test for each item you want to check.
-  background do
-    User.create!(names: "lompo", email: 'lompo@gmail.com', user_type: 'admin',  password: 'lompo123')
-    visit  log_in_path
-    #click_on 'Login'
-    fill_in  'Email' ,  with: 'lompo@gmail.com'
-    fill_in  'Password' ,  with: 'lompo123'
-    click_on  'Log in'
-
+      it 'should jump to login screen when not logged in' do
+        visit tasks_path
+        expect(current_path).to eq new_session_path
+        expect(current_path).not_to eq tasks_path
+        expect(page).to have_content 'Log in'
+      end
+    end
   end
 
-  scenario "Test number of users" do
+  describe "Session login test" do
+    before do
+      @user = FactoryBot.create(:user)
+      @admin_user = FactoryBot.create(:admin_user)
+    end
+    context "If the user is logged in" do
 
-    User.create!(names: '', email: 'lompo@gmail.com', user_type: 'admin', password: 'lompo123')
-    @user = User.all.count
-    expect(@user).to eq 2
+      it 'navigating to other user profile will return you to the tasks list screen' do
+        visit new_session_path
+        fill_in 'session_email', with: 'user1@example.com'
+        fill_in 'session_password', with: 'password'
+        click_button 'Log in'
+        visit user_path(id: @admin_user.id)
+        expect(current_path).to eq tasks_path
+      end
+
+      it 'should not be able to access the management screen' do
+        visit new_user_path
+        fill_in 'Username', with: 'test'
+        fill_in 'Email', with: 'test@example.com'
+        fill_in 'Password', with: 'password'
+        fill_in 'Password confirmation', with: 'password'
+        click_button 'Create my account'
+        visit admin_users_path
+        expect(current_path).to eq tasks_path
+      end
+
+      it 'should be able to log out' do
+        visit new_session_path
+        fill_in 'session_email', with: 'user1@example.com'
+        fill_in 'session_password', with: 'password'
+        click_button 'Log in'
+        click_on 'Logout'
+        expect(current_path).to eq new_session_path
+      end
+    end
   end
 
-  scenario "Test user list" do
+  describe "Management screen test" do
+    context "If there are no admin users" do
+      it "be able to access management page" do
+        user = User.create(username: "Lompo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Log in'
+        visit admin_users_path
+        expect(page).to have_content "List of Users"
+      end
 
-    User.create!(names: 'lompo', email: 'lompo@iuj.ac.jp', user_type: 'admin', password: 'lompo123')
-    visit admin_users_path
-    expect(page ).to  have_content  'Miyembal'
-    expect(page ).to  have_content  'lompo'
-  end
+      it 'should create new user' do
+        user = User.create(username: "Lompo2", email: "lompo2@gmail.com", password: "lompo1232", password_confirmation: "lompo1232", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo2@gmail.com"
+        fill_in "session_password", with: "lompo1232"
+        click_button 'Log in'
+        visit admin_users_path
+        click_link 'Create user'
+        expect(page).to have_content "New User"
+      end
 
-  scenario "Test user creation" do
-    User.create!(names: 'lompo', email: 'lompo@gmail.com', user_type: 'admin', password: 'lompo123')
-    visit admin_users_path
-    expect(page ).to  have_content  'lompo'
-  end
+      it 'should be able to access user profile' do
+        user = User.create(username: "Lompo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Log in'
+        visit admin_user_path(user)
+        expect(page).to have_content 'lompo@gmail.com'
+      end
 
-  scenario "test enable user creation page" do
-    visit admin_users_path
+      it 'should be able to access user edit screen' do
+        user = User.create(username: "Lompo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Log in'
+        visit admin_users_path
+        expect(page).to have_content 'Edit'
+      end
 
-    expect(page ).to  have_content  'lompo'
-  end
-
-  scenario "Test user details" do
-    @user= User.create!(names: 'lompo', email: 'lompo@gmail.com', user_type: 'admin', password: 'lompo123')
-
-
-    visit admin_user_path(id: @user.id)
-    expect(page).to have_content('lompo@gmail.com')
-    expect(page).to have_content('admin')
-  end
-  scenario "Test user updating" do
-    @user = User.first
-    visit edit_admin_user_path(id: @user.id)
-    fill_in 'username', with: 'username update'
-    fill_in 'Email', with: 'lompo@gmail.com'
-    click_on 'Update User'
-    visit admin_users_path
-    expect(page).to have_content('lompo@gmail.com')
-    expect(page).to have_content('name update')
-  end
-  scenario 'Test user Deletion' do
-    User.create!(names: 'lompomiyemba', email: 'lompomiyemba1@gmail.com', user_type: 'admin', password: 'lompo123')
-    @user = User.last
-    @user.destroy
-
-    #click_on 'Destroy'
-    visit users_path
-    expect(page).not_to have_content('lompomiyemba')
+      it 'Being able to delete users' do
+        user = User.create(username: "Lompo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Log in'
+        visit admin_users_path
+        click_on 'Delete'
+        expect(page).not_to have_content 'admin@example.com'
+      end
+    end
   end
 end

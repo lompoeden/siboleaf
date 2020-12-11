@@ -1,110 +1,124 @@
 require 'rails_helper'
-RSpec.describe 'User management function', type: :system do
+RSpec.describe 'User registration/login/logout function', type: :system do
 
-  let!(:user) { FactoryBot.create(:user) }
-  let!(:admin_user) { FactoryBot.create(:admin_user) }
-
-  describe 'New creation function test' do
-    context 'When you write a new test for the user' do
-      it 'User details are displayed' do
-        visit tasks_path
-        click_on 'Sign up'
-        fill_in 'username', with: 'test3'
-        fill_in 'user_email', with: 'test@test.com'
-        fill_in 'user_password', with: 'password'
-        fill_in 'user_password_confirmation', with: 'password'
-        click_on 'Create an account'
-        expect(page).to have_content 'test3'
-        expect(page).to have_content 'test@test.com'
+  describe 'User registration test' do
+    context 'If the user is not logged in' do
+      it 'should register new user' do
+        visit new_user_path
+        fill_in 'name', with: 'test'
+        fill_in 'email', with: 'test@example.com'
+        fill_in 'password', with: 'password'
+        fill_in 'password_confirmation', with: 'password'
+        click_button 'Create account'
+        expect(page).to have_content 'test'
+        expect(page).to have_content 'test@example.com'
       end
-    end
-    context 'If you try to jump to the task list without logging in' do
-      it 'Transition to the login screen' do
+
+      it 'should jump to login screen when not logged in' do
         visit tasks_path
-        expect(page).to have_content 'Please login'
+        expect(current_path).to eq new_session_path
+        expect(current_path).not_to eq tasks_path
+        expect(page).to have_content 'Login'
       end
     end
   end
 
-  describe 'General user session function test' do
-    context 'If you have user data and are not logged in' do
-      it 'Being able to log in' do
-        visit new_session_path
-        fill_in 'session_email', with: 'lompo@gmail.com'
-        fill_in 'session_password', with: 'password'
-        sleep 0.5
-        click_on 'Log in'
-        expect(page).to have_content 'Task list'
-      end
+  describe "Session login test" do
+    before do
+      @user = FactoryBot.create(:user)
+      @admin_user = FactoryBot.create(:admin_user)
     end
-    context 'If the user is logged in' do
-      before do
+    context "If the user is logged in" do
+      it "should navigate to user details page" do
         visit new_session_path
-        fill_in 'session_email', with: 'lompo@gmail.com'
+        fill_in 'session_email', with: 'user1@example.com'
         fill_in 'session_password', with: 'password'
-        click_on 'Log in'
+        click_button 'Login'
+        expect(current_path).to eq user_path(id: @user.id)
       end
-      it 'See your details page' do
-        click_on 'Profile'
-        expect(page).to have_content 'lompo@gmail.com'
+
+      it 'should see your profile page' do
+        visit new_session_path
+        fill_in 'session_email', with: 'user1@example.com'
+        fill_in 'session_password', with: 'password'
+        click_button 'Login'
+        expect(page).to have_content 'user1@example.com'
       end
-      it 'Jumping to another person's detail page will return you to the task list screen' do
-        visit user_path(admin_user.id)
-        expect(page).to have_content 'Not authorized'
+
+      it 'navigating to other user profile will return you to the tasks list screen' do
+        visit new_session_path
+        fill_in 'session_email', with: 'user1@example.com'
+        fill_in 'session_password', with: 'password'
+        click_button 'Login'
+        visit user_path(id: @admin_user.id)
+        expect(current_path).to eq tasks_path
       end
-      it 'Cannot access the management screen' do
+
+      it 'should not be able to access the management screen' do
         visit admin_users_path
-        expect(page).to have_content 'Only the administrator can access！'
+        expect(page).to have_content 'only for admins！'
       end
-      it 'being able to logout' do
+
+      it 'should be able to log out' do
+        visit new_session_path
+        fill_in 'session_email', with: 'user1@example.com'
+        fill_in 'session_password', with: 'password'
+        click_button 'Login'
         click_on 'Logout'
-        expect(page).to have_content 'user logged out'
+        expect(page).to have_content 'logged out'
       end
     end
   end
 
-  describe 'Administrative User Session Functional Test' do
-    context 'context'if the admin user is logged in' do
-      before do
+  describe "Management screen test" do
+    context "If there are no admin users" do
+      it "be able to access management page" do
         visit new_session_path
-        fill_in 'session_email', with: 'kana@kana.com'
-        fill_in 'session_password', with: 'password'
-        click_on 'Log in'
-      end
-      it 'being able to access management screen' do
+        fill_in "session_email", with: "admin@example.com"
+        fill_in "session_password", with: "12345678"
+        click_button 'Login'
         visit admin_users_path
-        expect(page).to have_content 'user management list'
+        expect(page).to have_content "Users"
       end
-      it 'Being able to to create new users' do
-        click_on 'create account'
-        fill_in 'user_name', with: 'test_user'
-        fill_in 'user_email', with: 'test@test.com'
-        fill_in 'user_password', with: 'password'
-        fill_in 'user_password_confirmation', with: 'password'
-        click_on 'Create account'
-        expect(page).to have_content 'test_user'
+
+      it 'should create new user' do
+        user = User.create(name: "Chipo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Login'
+        click_on 'Admin'
+        click_link 'Create user'
+        expect(page).to have_content "submit"
       end
-      it 'Access to the user details screen' do
-        visit admin_user_path(user.id)
-        expect(page).to have_content 'user1page'
+
+      it 'should be able to access user profile' do
+        sample = FactoryBot.create(:username: "sample", email: "sample@example.com")
+        visit admin_user_path(sample)
+        expect(page).to have_content 'sample@example.com'
       end
-      it 'scenaria delete' do
-        visit edit_admin_user_path(user.id)
-        fill_in 'user_name', with: 'update_user'
-        fill_in 'user_email', with: 'eden@lom.com'
-        fill_in 'user_password', with: 'password'
-        fill_in 'user_password_confirmation', with: 'password'
-        click_on 'Edit account'
-        expect(page).to have_content 'update'
+
+      it 'should be able to access user edit screen' do
+        sample = FactoryBot.create(:username: "sample", email: "sample@example.com")
+        visit edit_admin_user_path(sample)
+        expect(page).to have_content 'sample'
+        expect(page).to have_content 'sample@example.com'
       end
+
       it 'Being able to delete users' do
-        visit admin_users_path
+        user = User.create(name: "lompo", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        user = User.create(name: "lompo1", email: "lompo@gmail.com", password: "lompo123", password_confirmation: "lompo123", admin: true)
+        visit new_session_path
+        fill_in "session_email", with: "lompo@gmail.com"
+        fill_in "session_password", with: "lompo123"
+        click_button 'Login'
+        click_on 'Admin'
         within first('tbody tr') do
-         click_link 'Delete'
-        end
-        expect(page).to have_content 'user deleted'
+          click_on 'Delete'
+         end
+        #click_link "Delete", match: :first
+        expect(page).not_to have_content 'lompo@gmail.com'
       end
     end
   end
-
 end
