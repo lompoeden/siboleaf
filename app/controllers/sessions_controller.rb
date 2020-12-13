@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
+
   def new
     if logged_in?
       redirect_to tasks_path
   end
+end
+
 
   def create
     user = User.find_by(email:params[:session][:email].downcase)
@@ -21,4 +24,3 @@ class SessionsController < ApplicationController
     redirect_to new_session_path
     end
   end
-end

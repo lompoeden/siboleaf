@@ -22,6 +22,7 @@ class TasksController < ApplicationController
     end
   end
 
+
   def new
     if params[:back]
       @task = Task.new(task_params)
@@ -38,6 +39,7 @@ end
   end
 
   def create
+    @task = current_user.tasks.build(task_params)
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if params[:back]

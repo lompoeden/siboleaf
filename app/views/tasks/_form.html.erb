@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-<%= link_to 'general', tasks_path %>
+<%= link_to 'Main task', tasks_path %>
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -41,16 +41,15 @@
     <%= form.select :priority, [['high', '1'],['medium', '2'], ['low', '3']] %>
   </div>
 
-  <div class=" row field ml-2">
-    <%= form.label :Task_start, "Task starts: ", class:"mr-2"  %>
-    <br>
-    <%= form.date_select :start_at %>
-  </div>
-  <br>
-  <div class="row field ml-2">
-    <%= form.label :Task_end, "Task ends: ", class:"mr-2"  %>
-    <%= form.date_select :end_at %>
-  </div>
+  <div class="field">
+        <%= form.label :label %>
+        <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+      </div>
+
+
+
+  <%= form.hidden_field :user_id, :value => current_user.id %>
+
   <div class="actions text-center mt-4">
     <%= form.submit "Save", class:"btn btn-info " %>
   </div>

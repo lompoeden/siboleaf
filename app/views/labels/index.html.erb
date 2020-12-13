@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
-
+<%= link_to "Admin dashboard", admin_users_path, class:"btn btn-success ml-2" %>
+<div class="nav nav-pills nav-justified">
 <h1>Labels</h1>
 
 <table>
@@ -14,11 +15,12 @@
   <tbody>
     <% @labels.each do |label| %>
       <tr>
+        <td><%= n += 1 %></td>
         <td><%= label.name %></td>
         <td><%= label.content %></td>
-        <td><%= link_to 'Show', label %></td>
-        <td><%= link_to 'Edit', edit_label_path(label) %></td>
-        <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', label, class: "btn btn-warning" %></td>
+        <td><%= link_to 'Edit', edit_label_path(label), class: "btn btn-info" %></td>
+        <td><%= link_to 'Delete', label, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Label', new_label_path %>
+<%= link_to 'New Label', new_label_path, class:"btn btn-primary ml-2" %>

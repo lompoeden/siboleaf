@@ -21,3 +21,10 @@ class User < ApplicationRecord
     end
   end
 end
+def check_can_change_admin
+    if User.where(admin: true).count == 1 && self.admin_change == [true, false]
+      errors.add :base, '管理者が一人以上必要なため、権限の変更はできません'
+      throw(:abord)
+    #   throw :abort if User.where(admin: true).count == 1 && admin == false
+    end
+  end
