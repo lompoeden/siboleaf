@@ -24,22 +24,20 @@ class TasksController < ApplicationController
 
 
   def new
-    if params[:back]
-      @task = Task.new(task_params)
-      @task.enddate = Date.today
-    else
-      @task = Task.new
+    @task = Task.new
+    current_user = @current_user
+    @labels = Label.all
   end
-end
 
   def show
+    @labels = Label.all
   end
 
   def edit
+    @labels = Label.all
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if params[:back]
@@ -72,6 +70,11 @@ end
   end
 
   private
+  def check_if_logged_in
+    if !logged_in?
+      redirect_to new_session_path, notice: "you are not authorized to access this page"
+    end
+  end
 
   def set_task
     @task = Task.find(params[:id])

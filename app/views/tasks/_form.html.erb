@@ -41,11 +41,12 @@
     <%= form.select :priority, [['high', '1'],['medium', '2'], ['low', '3']] %>
   </div>
 
-  <div class="field">
-        <%= form.label :label %>
-        <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
-      </div>
-
+  <div class="field_labels">
+    <% @labels.each do |label| %>
+    <%= form.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), disabled: label[:disabled], include_hidden: false}, label[:id]%>
+    <label><%= label.label.name %></label>
+    <% end %>
+  </div>
 
 
   <%= form.hidden_field :user_id, :value => current_user.id %>

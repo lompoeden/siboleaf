@@ -2,6 +2,14 @@ class UsersController < ApplicationController
   before_action :authenticate_user, { only: [:index, :show, :edit, :update] }
   PER = 6
 
+  def index
+      if logged_in? && current_user.admin?
+        redirect_to admin_users_path
+      else
+        redirect_to new_session_path
+      end
+    end
+
   def new
     @user = User.new
     if logged_in?
@@ -28,8 +36,11 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
+      if current_user.admin
       redirect_to admin_user_path
     else
+      redirect_to @user, notice: 'User was successfully updated.'
+      end
       render :edit
     end
   end
@@ -41,6 +52,10 @@ class UsersController < ApplicationController
   end
 
   private
+  def set_user
+      @user = User.find(params[:id])
+    end
+
 
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)
