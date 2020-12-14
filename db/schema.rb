@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 2020_12_11_153608) do
 
   create_table "labels", force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
