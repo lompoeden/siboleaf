@@ -22,7 +22,6 @@ class TasksController < ApplicationController
     end
   end
 
-
   def new
     @task = Task.new
     current_user = @current_user
@@ -81,6 +80,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :status, :priority, :startdate, :enddate, :id, :user_id)
+    params.require(:task).permit(:title, :content, :status, :priority, :startdate, :enddate, :id, :user_id, label_ids: [])
   end
 end

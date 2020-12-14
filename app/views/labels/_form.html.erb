@@ -16,17 +16,6 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
-
-  <div class="field">
-
-    <%= form.hidden_field :user_id, value: 'current_user.id' %>
-  </div>
-  
-
   <div class="actions text-center mt-4">
     <%= form.submit "Save", class:"btn btn-info " %>
   </div>

@@ -41,12 +41,17 @@
     <%= form.select :priority, [['high', '1'],['medium', '2'], ['low', '3']] %>
   </div>
 
-  <div class="field_labels">
-    <% @labels.each do |label| %>
-    <%= form.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), disabled: label[:disabled], include_hidden: false}, label[:id]%>
-    <label><%= label.label.name %></label>
+  <b class="ml-2">Labels</b>
+  <% if logged_in? %>
+    <% Label.all.each do |label| %>
+      <% if current_user.id == label.user_id %>
+        <div class="row ml-4">
+          <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+          <%= form.label:name, label.name %>
+        </div>
+      <% end %>
     <% end %>
-  </div>
+  <% end %>
 
 
   <%= form.hidden_field :user_id, :value => current_user.id %>
@@ -55,7 +60,3 @@
     <%= form.submit "Save", class:"btn btn-info " %>
   </div>
 <% end %>
-</div>
-</div>
-</div>
-</div>

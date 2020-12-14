@@ -18,6 +18,7 @@
    <% if logged_in? %>
               <%= link_to @current_user.username, user_path(@current_user.id)%>
               <%= link_to "user management", admin_users_path%>
+              <%= link_to "Label", labels_path, class:"btn btn-blue"%>
               <%= button_to "Logout", session_path(current_user.id), :method=>:delete, :class=>:destroy, class:"btn btn-blue" %>
           <% end %>
    <div class="collapse navbar-collapse" id="navbarSupportedContent">

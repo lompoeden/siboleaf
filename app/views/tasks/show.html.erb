@@ -34,6 +34,13 @@
   <strong>Priority:</strong>
   <%= @task.priority %>
 </p>
+<p>
+  <strong>Labels:</strong>
+  <% @task.labels.each do | label | %>
+    <%= label.name %>
+  <% end %>
+</p>
+
 
 
 

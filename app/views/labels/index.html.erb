@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Content</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,12 +13,10 @@
   <tbody>
     <% @labels.each do |label| %>
       <tr>
-        <td><%= n += 1 %></td>
         <td><%= label.name %></td>
-        <td><%= label.content %></td>
         <td><%= link_to 'Show', label, class: "btn btn-warning" %></td>
         <td><%= link_to 'Edit', edit_label_path(label), class: "btn btn-info" %></td>
-        <td><%= link_to 'Delete', label, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Delete', label, :method=>:delete, :class=>:destroy, class:"btn btn-danger btn-lg" %></td>
       </tr>
     <% end %>
   </tbody>

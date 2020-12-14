@@ -1,15 +1,8 @@
 class LabelsController < ApplicationController
   before_action :set_label, only: [:show, :edit, :update, :destroy]
-    before_action :current_user
-    before_action :check_user
-  # GET /labels
-  # GET /labels.json
+
   def index
-    if logged_in? && current_user.admin?
     @labels = Label.all
-  else
-          redirect_to new_session_path
-      end
   end
 
   # GET /labels/1
@@ -30,16 +23,18 @@ class LabelsController < ApplicationController
   # POST /labels.json
   def create
     @label = Label.new(label_params)
+    @label.user_id = current_user.id
     #@label = current_user.labels.build(label_params)
 
     respond_to do |format|
       if @label.save
-        redirect_to labels_path, notice: 'Label was successfully created.'
+        format.html { redirect_to @label, notice: 'Label was successfully created.' }
+        format.json { render :show, status: :ok, location: @label }
         else
             render :new
         end
     end
-
+end
   # PATCH/PUT /labels/1
   # PATCH/PUT /labels/1.json
   def update
@@ -72,14 +67,7 @@ class LabelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def label_params
-      params.require(:label).permit(:name, :content, :user_id)
+      params.require(:label).permit(:name, :user_id)
     end
-  end
 
-  def check_user
-      unless current_user.admin?
-        flash[:notice] = "reserved for admin only！"
-        redirect_to new_session_path
-      end
-    end
 end
