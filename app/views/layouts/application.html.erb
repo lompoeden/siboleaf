@@ -17,20 +17,19 @@
    </button>
    <% if logged_in? %>
               <%= link_to @current_user.username, user_path(@current_user.id)%>
-              <%= link_to "user management", admin_users_path%>
-              <%= link_to "Label", labels_path, class:"btn btn-blue"%>
-              <%= button_to "Logout", session_path(current_user.id), :method=>:delete, :class=>:destroy, class:"btn btn-blue" %>
+              <%= link_to "user management", admin_users_path, class:"btn btn-success ml-5"%>
+              <%= link_to "MyLabels", labels_path, class:"btn btn-info"%>
+              <%= button_to "Logout", session_path(current_user.id), :method=>:delete, :class=>:destroy, class:"btn btn-success ml-5" %>
           <% end %>
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
      <ul class="navbar-nav mr-auto">
        <li class="nav-item active">
          <a class="nav-link" href="#">
-             <img src="https://img.icons8.com/material-sharp/24/000000/home.png"/>
          </a>
        </li>
        <li class="nav-item">
 
-         <%= link_to "new", new_task_path, class: "nav-link" %>
+         <%= link_to "new task", new_task_path, class: "btn btn-danger btn-lg" %>
        </li>
    </div>
  </nav>
