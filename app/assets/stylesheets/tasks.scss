@@ -1,0 +1,33 @@
+body{
+  background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg") center center / cover no-repeat;
+  font-size: 1.25rem;
+ }
+.container{
+  width: 100%;
+  margin-top: 1.25rem;
+}
+h1{
+  text-align: left;
+  text-decoration-style: wavy;
+  font-weight: bolder;
+  font-style: italic;
+}
+table th, td{
+  padding: 20px;
+  background-color: #skyblue;
+  font-size: 20px;
+}
+.field{
+  text-align: left;
+  font-size: 20px;
+}
+.task_container {
+  border-bottom: 1px solid silver;
+}
+.center {
+  margin:auto;
+  text-align: center;
+}
+.block {
+  display: block;
+}
